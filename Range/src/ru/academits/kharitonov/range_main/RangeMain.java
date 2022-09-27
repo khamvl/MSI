@@ -8,13 +8,13 @@ public class RangeMain {
 
         double from = range.getFrom();
         double to = range.getTo();
-        boolean isInRangeNumber = range.isInside(565.45);
+        boolean isNumberInRange = range.isInside(565.45);
 
         System.out.println("Наименьшее число в диапазоне: " + from);
         System.out.println("Наибольшее число в диапазоне: " + to);
         System.out.println("Длина диапазана = " + range.getLength());
 
-        if (isInRangeNumber) {
+        if (isNumberInRange) {
             System.out.println("Число входит в диапазон");
         } else {
             System.out.println("Число не входит в диапазон");
@@ -27,13 +27,13 @@ public class RangeMain {
 
         from = range.getFrom();
         to = range.getTo();
-        isInRangeNumber = range.isInside(9564.45);
+        isNumberInRange = range.isInside(9564.45);
 
         System.out.println("Наименьшее число в диапазоне: " + from);
         System.out.println("Наибольшее число в диапазоне: " + to);
         System.out.println("Длина диапазона = " + range.getLength());
 
-        if (isInRangeNumber) {
+        if (isNumberInRange) {
             System.out.println("Число входит в диапазон");
         } else {
             System.out.println("Число не входит в диапазон");
