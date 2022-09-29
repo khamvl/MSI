@@ -1,6 +1,7 @@
 package ru.academits.kharitonov.range_main;
 
 import ru.academits.kharitonov.range.Range;
+import ru.academits.kharitonov.range.RangeStar;
 
 public class RangeMain {
     public static void main(String[] args) {
@@ -37,6 +38,28 @@ public class RangeMain {
             System.out.println("Число входит в диапазон");
         } else {
             System.out.println("Число не входит в диапазон");
+        }
+
+        System.out.println("---------------------------------");
+
+        RangeStar rangeStar = new RangeStar(0, -2, 4, 2);
+
+        if (rangeStar.getTwoIntervalsIntersection() == null) {
+            System.out.println("Пересечения нет");
+        } else {
+            System.out.println("Диапазон пересечения [" + rangeStar.getTwoIntervalsIntersection() + "]");
+        }
+
+        System.out.println("---------------------------------");
+
+        System.out.println("Диапазон объединения " + rangeStar.getTwoIntervalsUnion());
+
+        System.out.println("---------------------------------");
+
+        if (rangeStar.getTwoIntervalsDifference() == null) {
+            System.out.println("Разность двух интервалов = 0");
+        } else {
+            System.out.println("Разность двух интервалов " + rangeStar.getTwoIntervalsDifference());
         }
     }
 }
