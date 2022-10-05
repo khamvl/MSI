@@ -1,7 +1,8 @@
 package ru.academits.kharitonov.range_main;
 
 import ru.academits.kharitonov.range.Range;
-import ru.academits.kharitonov.range.RangeStar;
+
+import java.util.Arrays;
 
 public class RangeMain {
     public static void main(String[] args) {
@@ -42,24 +43,23 @@ public class RangeMain {
 
         System.out.println("---------------------------------");
 
-        RangeStar rangeStar = new RangeStar(0, -2, 4, 2);
+        range.setFrom(0);
+        range.setTo(8);
 
-        if (rangeStar.getTwoIntervalsIntersection() == null) {
+        double intersectionRange = range.getIntersection(0, 5);
+
+        if (intersectionRange == 0) {
             System.out.println("Пересечения нет");
         } else {
-            System.out.println("Диапазон пересечения [" + rangeStar.getTwoIntervalsIntersection() + "]");
+            System.out.println("Диапазон пересечения = " + intersectionRange);
         }
 
         System.out.println("---------------------------------");
 
-        System.out.println("Диапазон объединения " + rangeStar.getTwoIntervalsUnion());
+        System.out.println("Диапазон объединения " + Arrays.deepToString(range.getUnion(0, 5)));
 
         System.out.println("---------------------------------");
 
-        if (rangeStar.getTwoIntervalsDifference() == null) {
-            System.out.println("Разность двух интервалов = 0");
-        } else {
-            System.out.println("Разность двух интервалов " + rangeStar.getTwoIntervalsDifference());
-        }
+        System.out.println("Разность двух интервалов " + Arrays.deepToString(range.getDifference(0, 5)));
     }
 }
