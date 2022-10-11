@@ -50,7 +50,6 @@ public class RangeMain {
 
         Range intersectionRange = range.getIntersection(range1);
 
-
         if (intersectionRange == null) {
             System.out.println("Пересечения нет");
         } else {
