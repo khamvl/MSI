@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class RangeMain {
     public static void main(String[] args) {
-        Range range = new Range(132.123, 14124.213);
+        Range range = new Range(4, 8);
 
         double from = range.getFrom();
         double to = range.getTo();
@@ -43,12 +43,15 @@ public class RangeMain {
 
         System.out.println("---------------------------------");
 
-        range.setFrom(0);
-        range.setTo(8);
+        range.setFrom(15);
+        range.setTo(82);
 
-        double intersectionRange = range.getIntersection(0, 5);
+        Range range1 = new Range(44, 100);
 
-        if (intersectionRange == 0) {
+        Range intersectionRange = range.getIntersection(range1);
+
+
+        if (intersectionRange == null) {
             System.out.println("Пересечения нет");
         } else {
             System.out.println("Диапазон пересечения = " + intersectionRange);
@@ -56,10 +59,16 @@ public class RangeMain {
 
         System.out.println("---------------------------------");
 
-        System.out.println("Диапазон объединения " + Arrays.deepToString(range.getUnion(0, 5)));
+        System.out.println("Диапазон объединения двух интервалов = " + Arrays.toString(range.getUnion(range1)));
 
         System.out.println("---------------------------------");
 
-        System.out.println("Разность двух интервалов " + Arrays.deepToString(range.getDifference(0, 5)));
+        Range[] differenceRange = range.getDifference(range1);
+
+        if (differenceRange == null) {
+            System.out.println("Разность двух интервалов = 0");
+        } else {
+            System.out.println("Разность двух интервалов " + Arrays.toString(range.getDifference(range1)));
+        }
     }
 }

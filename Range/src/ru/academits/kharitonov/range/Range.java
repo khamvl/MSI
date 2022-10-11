@@ -33,61 +33,66 @@ public class Range {
         return number >= from && number <= to;
     }
 
-    public double getIntersection(double from2, double to2) {
-        if (from < to2 && to > from2) {
-            return Math.min(to, to2) - Math.max(from, from2);
+    public Range getIntersection(Range range) {
+        if (from < range.to && to > range.from) {
+            return new Range(Math.max(from, range.from), Math.min(to, range.to));
         }
 
-        return 0;
+        return null;
     }
 
-    public double[][] getUnion(double from2, double to2) {
-        if (from <= to2 && to >= from2) {
-            return new double[][]{{Math.min(from, from2)}, {Math.max(to, to2)}};
-        }
-
-        if (from < from2) {
-            return new double[][]{{from, to}, {from2, to2}};
-        }
-
-        return new double[][]{{from2, to2}, {from, to}};
+    @Override
+    public String toString() {
+        return "[" + from + "; " + to + "]";
     }
 
-    public double[][] getDifference(double from2, double to2) {
-        if (from < to2 && to > from2) {
-            if (from <= from2 && to2 > to) {
-                if (from == from2) {
-                    return new double[][]{{to}, {to2}};
+    public Range[] getUnion(Range range) {
+        if (from <= range.to && to >= range.from) {
+            return new Range[]{new Range(Math.min(from, range.from), Math.max(to, range.to))};
+        }
+
+        if (from < range.from) {
+            return new Range[]{new Range(from, to), new Range(range.from, range.to)};
+        }
+
+        return new Range[]{new Range(range.from, range.to), new Range(from, to)};
+    }
+
+    public Range[] getDifference(Range range) {
+        if (from < range.to && to > range.from) {
+            if (from <= range.from && range.to > to) {
+                if (from == range.from) {
+                    return new Range[]{new Range(to, range.to)};
                 }
 
-                return new double[][]{{from, from2}, {to, to2}};
+                return new Range[]{new Range(from, range.from), new Range(to, range.to)};
             }
 
-            if (from > from2 && to2 > to) {
-                return new double[][]{{from2, from}, {to, to2}};
+            if (from > range.from && range.to > to) {
+                return new Range[]{new Range(range.from, from), new Range(to, range.to)};
             }
 
-            if (from <= from2 && to2 < to) {
-                if (from == from2) {
-                    return new double[][]{{to2}, {to}};
+            if (from <= range.from && range.to < to) {
+                if (from == range.from) {
+                    return new Range[]{new Range(range.to, to)};
                 }
 
-                return new double[][]{{from, from2}, {to2, to}};
+                return new Range[]{new Range(from, range.from), new Range(range.to, to)};
             }
 
-            if (from > from2 && to2 < to) {
-                return new double[][]{{from2, from}, {to2, to}};
+            if (from > range.from && range.to < to) {
+                return new Range[]{new Range(range.from, from), new Range(range.to, to)};
             }
 
-            if (from < from2) {
-                return new double[][]{{from}, {from2}};
+            if (from < range.from) {
+                return new Range[]{new Range(from, range.from)};
             }
 
-            if (from > from2) {
-                return new double[][]{{from2}, {from}};
+            if (from > range.from) {
+                return new Range[]{new Range(range.from, from)};
             }
         }
 
-        return new double[][]{{0}, {0}};
+        return null;
     }
 }
