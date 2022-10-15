@@ -43,7 +43,7 @@ public class Range {
 
     @Override
     public String toString() {
-        return "[" + from + "; " + to + "]";
+        return "(" + from + "; " + to + ")";
     }
 
     public Range[] getUnion(Range range) {
@@ -59,40 +59,42 @@ public class Range {
     }
 
     public Range[] getDifference(Range range) {
-        if (from < range.to && to > range.from) {
-            if (from <= range.from && range.to > to) {
-                if (from == range.from) {
-                    return new Range[]{new Range(to, range.to)};
-                }
+        if (from >= range.to || to <= range.from) {
+            return new Range[]{};
+        }
 
+        if (from <= range.from && to <= range.to) {
+            if (from < range.from && to < range.to) {
                 return new Range[]{new Range(from, range.from), new Range(to, range.to)};
             }
 
-            if (from > range.from && range.to > to) {
-                return new Range[]{new Range(range.from, from), new Range(to, range.to)};
-            }
-
-            if (from <= range.from && range.to < to) {
-                if (from == range.from) {
-                    return new Range[]{new Range(range.to, to)};
-                }
-
-                return new Range[]{new Range(from, range.from), new Range(range.to, to)};
-            }
-
-            if (from > range.from && range.to < to) {
-                return new Range[]{new Range(range.from, from), new Range(range.to, to)};
+            if (to < range.to) {
+                return new Range[]{new Range(to, range.to)};
             }
 
             if (from < range.from) {
                 return new Range[]{new Range(from, range.from)};
             }
 
-            if (from > range.from) {
-                return new Range[]{new Range(range.from, from)};
-            }
+            return new Range[]{};
         }
 
-        return null;
+        if (from >= range.from && to >= range.to) {
+            if (from > range.from && to > range.to) {
+                return new Range[]{new Range(range.from, from), new Range(range.to, to)};
+            }
+
+            if (to > range.to) {
+                return new Range[]{new Range(range.to, to)};
+            }
+
+            return new Range[]{new Range(range.from, from)};
+        }
+
+        if (range.from < from) {
+            return new Range[]{new Range(range.from, from), new Range(to, range.to)};
+        }
+
+        return new Range[]{new Range(from, range.from), new Range(range.to, to)};
     }
 }

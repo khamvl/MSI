@@ -43,31 +43,25 @@ public class RangeMain {
 
         System.out.println("---------------------------------");
 
-        range.setFrom(15);
-        range.setTo(82);
+        range.setFrom(5);
+        range.setTo(10);
 
-        Range range1 = new Range(44, 100);
+        Range range1 = new Range(5, 9);
 
         Range intersectionRange = range.getIntersection(range1);
 
         if (intersectionRange == null) {
             System.out.println("Пересечения нет");
         } else {
-            System.out.println("Диапазон пересечения = " + intersectionRange);
+            System.out.println("Диапазон пересечения : " + intersectionRange);
         }
 
         System.out.println("---------------------------------");
 
-        System.out.println("Диапазон объединения двух интервалов = " + Arrays.toString(range.getUnion(range1)));
+        System.out.println("Диапазон объединения двух интервалов : " + Arrays.toString(range.getUnion(range1)));
 
         System.out.println("---------------------------------");
 
-        Range[] differenceRange = range.getDifference(range1);
-
-        if (differenceRange == null) {
-            System.out.println("Разность двух интервалов = 0");
-        } else {
-            System.out.println("Разность двух интервалов " + Arrays.toString(range.getDifference(range1)));
-        }
+        System.out.println("Разность двух интервалов : " + Arrays.toString(range.getDifference(range1)));
     }
 }
