@@ -1,9 +1,17 @@
-package ru.academits.kharitonov.shape;
+package ru.academits.kharitonov.shapes;
 
 public class Square implements Shape {
-    double sideLength;
+    private double sideLength;
 
     public Square(double sideLength) {
+        this.sideLength = sideLength;
+    }
+
+    public double getSideLength() {
+        return sideLength;
+    }
+
+    public void setSideLength(double sideLength) {
         this.sideLength = sideLength;
     }
 
@@ -19,18 +27,18 @@ public class Square implements Shape {
 
     @Override
     public double getArea() {
-        return getWidth() * getHeight();
+        return sideLength * sideLength;
     }
 
     @Override
     public double getPerimeter() {
-        return (getWidth() + getHeight()) * 2;
+        return (sideLength + sideLength) * 2;
     }
 
     @Override
     public String toString() {
-        return "Ширина равна = " + getWidth() + "\nВысота равна = " + getHeight() +
-                "\nПлощадь равна = " + getArea() + "\nПериметр равен = " + getPerimeter();
+        return "Фигура: квадрат; " + "Длина стороны = " + sideLength + "; " + "Площадь = " + getArea()
+                + "; " + "Периметр = " + getPerimeter();
     }
 
     @Override

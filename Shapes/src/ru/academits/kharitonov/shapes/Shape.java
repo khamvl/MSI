@@ -1,7 +1,6 @@
-package ru.academits.kharitonov.shape;
+package ru.academits.kharitonov.shapes;
 
 public interface Shape {
-
     double getWidth();
 
     double getHeight();
