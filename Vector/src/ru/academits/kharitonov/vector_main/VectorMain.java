@@ -1,7 +1,6 @@
 package ru.academits.kharitonov.vector_main;
 
 import ru.academits.kharitonov.vector.Vector;
-
 import java.util.Arrays;
 
 public class VectorMain {
