@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/CSV/CSV.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/Csv/CSV.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/Csv/src/ru/academits/kharitonov/csv/Csv.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/fileCsv.txt" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/outputFileCsv.html" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/outputFileCsv.txt" charset="windows-1251" />
   </component>
 </project>
