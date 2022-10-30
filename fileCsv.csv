@@ -3,8 +3,8 @@ Name;Surname;MiddleName;Number
 Anton";"Kharitonov
 Xaritonov";;"123
 456"
-Svetlana;Dorojkina;Sergeevna;
-"""Daniil""";Sokolov;;"""913958"""
-Maxim;"""Makhmedov""";;
-Anton;Kharitonov;Vladimirovich;
+Eva;Popova < Kharitonov;Sergeevna;
+"""""Sergey""""";&Sokolov;;"""913958"""
+Dmitriy;"""Ivanov""";;
+Denis > Maxim;Popov;Mironovich;
 """";""",";;
