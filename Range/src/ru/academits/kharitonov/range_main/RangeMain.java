@@ -43,10 +43,10 @@ public class RangeMain {
 
         System.out.println("---------------------------------");
 
-        range.setFrom(1);
+        range.setFrom(3);
         range.setTo(7);
 
-        Range range1 = new Range(3, 5);
+        Range range1 = new Range(5, 7);
 
         Range intersectionRange = range.getIntersection(range1);
 
