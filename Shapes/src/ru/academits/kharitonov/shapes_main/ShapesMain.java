@@ -1,7 +1,7 @@
 package ru.academits.kharitonov.shapes_main;
 
-import ru.academits.kharitonov.comparators.AreaComparator;
-import ru.academits.kharitonov.comparators.PerimeterComparator;
+import ru.academits.kharitonov.shapes.comparators.AreaComparator;
+import ru.academits.kharitonov.shapes.comparators.PerimeterComparator;
 import ru.academits.kharitonov.shapes.*;
 
 import java.util.Arrays;

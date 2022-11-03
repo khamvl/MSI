@@ -1,4 +1,4 @@
-package ru.academits.kharitonov.comparators;
+package ru.academits.kharitonov.shapes.comparators;
 
 import ru.academits.kharitonov.shapes.Shape;
 

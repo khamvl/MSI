@@ -67,18 +67,12 @@ public class Triangle implements Shape {
 
     @Override
     public double getWidth() {
-        double maxWidthCoordinate = Math.max(Math.max(x1, x2), x3);
-        double minWidthCoordinate = Math.min(Math.min(x1, x2), x3);
-
-        return maxWidthCoordinate - minWidthCoordinate;
+        return Math.max(Math.max(x1, x2), x3) - Math.min(Math.min(x1, x2), x3);
     }
 
     @Override
     public double getHeight() {
-        double maxHeightCoordinate = Math.max(Math.max(y1, y2), y3);
-        double minHeightCoordinate = Math.min(Math.min(y1, y2), y3);
-
-        return maxHeightCoordinate - minHeightCoordinate;
+        return Math.max(Math.max(y1, y2), y3) - Math.min(Math.min(y1, y2), y3);
     }
 
     @Override
@@ -86,24 +80,24 @@ public class Triangle implements Shape {
         return Math.abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1)) / 2;
     }
 
-    private double getSideLength(double x, double x1, double y, double y1) {
-        return Math.sqrt(Math.pow(x - x1, 2) + Math.pow(y - y1, 2));
+    private static double getSideLength(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
     }
 
     @Override
     public double getPerimeter() {
-        double side1 = getSideLength(x2, x1, y2, y1);
-        double side2 = getSideLength(x3, x2, y3, y2);
-        double side3 = getSideLength(x3, x1, y3, y1);
+        double sideLength1 = getSideLength(x2, y2, x1, y1);
+        double sideLength2 = getSideLength(x3, y3, x2, y2);
+        double sideLength3 = getSideLength(x3, y3, x1, y1);
 
-        return side1 + side2 + side3;
+        return sideLength1 + sideLength2 + sideLength3;
     }
 
     @Override
     public String toString() {
-        return "Фигура: треугольник; " + "Координаты: (" + x1 + "; " + y1 + "), (" + x2 + "; "
-                + y2 + "), (" + x3 + "; " + y3 + "); " + "Площадь = " + getArea()
-                + "; " + "Периметр = " + getPerimeter();
+        return "Фигура: треугольник; Координаты: (" + x1 + "; " + y1 + "), (" + x2 + "; "
+                + y2 + "), (" + x3 + "; " + y3 + "); Площадь = " + getArea()
+                + "; Периметр = " + getPerimeter();
     }
 
     @Override
@@ -118,7 +112,8 @@ public class Triangle implements Shape {
 
         Triangle triangle = (Triangle) o;
 
-        return x1 == triangle.x1 && y1 == triangle.y1 && x2 == triangle.x2 && y2 == triangle.y2
+        return x1 == triangle.x1 && y1 == triangle.y1
+                && x2 == triangle.x2 && y2 == triangle.y2
                 && x3 == triangle.x3 && y3 == triangle.y3;
     }
 
