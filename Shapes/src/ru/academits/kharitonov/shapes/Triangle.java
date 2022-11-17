@@ -86,11 +86,11 @@ public class Triangle implements Shape {
 
     @Override
     public double getPerimeter() {
-        double sideLength1 = getSideLength(x2, y2, x1, y1);
-        double sideLength2 = getSideLength(x3, y3, x2, y2);
-        double sideLength3 = getSideLength(x3, y3, x1, y1);
+        double side1Length = getSideLength(x2, y2, x1, y1);
+        double side2Length = getSideLength(x3, y3, x2, y2);
+        double side3Length = getSideLength(x3, y3, x1, y1);
 
-        return sideLength1 + sideLength2 + sideLength3;
+        return side1Length + side2Length + side3Length;
     }
 
     @Override
