@@ -3,134 +3,180 @@ package ru.academits.kharitonov.vector;
 import java.util.Arrays;
 
 public class Vector {
-    double[] array;
-    int n;
-    Vector vector;
-    double[] values;
+    private double[] vectorCoordinates;
 
-    public Vector(int n) {
-        if (n <= 0) {
-            throw new IllegalArgumentException("n (vector dimension) must be > 0");
+    public Vector(int vectorSize) {
+        if (vectorSize > 0) {
+            vectorCoordinates = new double[vectorSize];
+        } else {
+            throw new ArrayIndexOutOfBoundsException("vectorSize must be > 0");
         }
-
-        this.n = 0;
     }
 
     public Vector(Vector vector) {
-        this.vector = vector;
+        vectorCoordinates = vector.vectorCoordinates;
     }
 
     public Vector(double[] values) {
-        this.values = values;
+        if (values.length > 0) {
+            vectorCoordinates = new double[values.length];
+
+            for (int i = 0; i < vectorCoordinates.length; i++) {
+                vectorCoordinates[i] = values[i];
+            }
+        } else {
+            throw new IllegalArgumentException("Array length must be > 0");
+        }
     }
 
+    public Vector(int vectorSize, double[] values) {
+        if (vectorSize > 0) {
+            vectorCoordinates = new double[vectorSize];
+            int i = 0;
 
-    public Vector(int n, double[] values) {
-        if (n < 0) {
-            throw new NegativeArraySizeException("n must be >= 0");
-        }
-
-        array = new double[n];
-
-        for (int i = 0; i < n; i++) {
-            try {
-                this.array[i] = values[i];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                if (values.length < n) {
-                    array[i] = 0;
+            if (vectorSize >= values.length) {
+                while (i <= values.length - 1) {
+                    vectorCoordinates[i] = values[i];
+                    i++;
+                }
+            } else {
+                while (i <= vectorSize - 1) {
+                    vectorCoordinates[i] = values[i];
+                    i++;
                 }
             }
+        } else {
+            throw new IllegalArgumentException("vectorSize must be > 0");
         }
     }
 
     public int getSize() {
-        return array.length;
+        return vectorCoordinates.length;
     }
 
     @Override
     public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{");
+
+        for (double vectorCoordinate : vectorCoordinates) {
+            stringBuilder.append(vectorCoordinate).append(", ");
+        }
+
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length()).append("}");
+
+        return stringBuilder.toString();
+    }
+
+    public void add(Vector vector) {
         int i = 0;
-        StringBuilder arrayString = new StringBuilder();
 
-        while (i < array.length) {
-            if (i == 0) {
-                arrayString = new StringBuilder(String.valueOf(array[i]));
-            } else {
-                arrayString.append(", ").append(array[i]);
+        if (vectorCoordinates.length < vector.vectorCoordinates.length) {
+            double[] resultVector = new double[vector.vectorCoordinates.length];
+
+            while (i < vectorCoordinates.length) {
+                resultVector[i] = vectorCoordinates[i] + vector.vectorCoordinates[i];
+                i++;
             }
 
-            i++;
-        }
-
-        return "{" + arrayString + "}";
-    }
-
-    public double[] getVectorAddition(Vector nValues2) {
-        int maxLength = Math.max(array.length, nValues2.array.length);
-        double[] resultVector = new double[maxLength];
-
-        for (int i = 0; i < maxLength; i++) {
-            try {
-                resultVector[i] = array[i] + nValues2.array[i];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                if (array.length < nValues2.array.length) {
-                    resultVector[i] = nValues2.array[i];
-                } else {
-                    resultVector[i] = array[i];
-                }
+            while (i < vector.vectorCoordinates.length) {
+                resultVector[i] = vector.vectorCoordinates[i];
+                i++;
             }
-        }
 
-        array = resultVector;
-
-        return array;
-    }
-
-    public double[] getVectorSubtraction(Vector nValues2) {
-        int maxLength = Math.max(array.length, nValues2.array.length);
-        double[] resultVector = new double[maxLength];
-
-        for (int i = 0; i < maxLength; i++) {
-            try {
-                resultVector[i] = array[i] - nValues2.array[i];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                if (array.length < nValues2.array.length) {
-                    resultVector[i] = -nValues2.array[i];
-                } else {
-                    resultVector[i] = -array[i];
-                }
-            }
-        }
-        array = resultVector;
-
-        return array;
-    }
-
-    public double[] getMultiplicationOfVectorByScalar(double coefficient) {
-        for (int i = 0; i < array.length; i++) {
-            array[i] = array[i] * coefficient;
-        }
-
-        return array;
-    }
-
-    public double[] getVectorReversal() {
-        for (int i = 0; i < array.length; i++) {
-            array[i] = array[i] * -1;
-        }
-
-        return array;
-    }
-
-    public double getVectorComponent(int index) {
-        if (index < 0) {
-            throw new ArrayIndexOutOfBoundsException("index must be => 0");
-        }
-
-        if (index > array.length - 1) {
-            throw new ArrayIndexOutOfBoundsException("index must be < arrayLength");
+            vectorCoordinates = resultVector;
         } else {
-            return array[index];
+            if (vectorCoordinates.length > vector.vectorCoordinates.length) {
+                while (i < vector.vectorCoordinates.length) {
+                    vectorCoordinates[i] += vector.vectorCoordinates[i];
+                    i++;
+                }
+            } else {
+                while (i < vectorCoordinates.length) {
+                    vectorCoordinates[i] += vector.vectorCoordinates[i];
+                    i++;
+                }
+            }
+        }
+    }
+
+    public void subtract(Vector vector) {
+        int i = 0;
+
+        if (vectorCoordinates.length < vector.vectorCoordinates.length) {
+            double[] resultVector = new double[vector.vectorCoordinates.length];
+
+            while (i < vectorCoordinates.length) {
+                resultVector[i] = vectorCoordinates[i] - vector.vectorCoordinates[i];
+                i++;
+            }
+
+            while (i < vector.vectorCoordinates.length) {
+                resultVector[i] = vector.vectorCoordinates[i];
+                i++;
+            }
+
+            vectorCoordinates = resultVector;
+        } else {
+            if (vectorCoordinates.length > vector.vectorCoordinates.length) {
+                while (i < vector.vectorCoordinates.length) {
+                    vectorCoordinates[i] -= vector.vectorCoordinates[i];
+                    i++;
+                }
+            } else {
+                while (i < vectorCoordinates.length) {
+                    vectorCoordinates[i] -= vector.vectorCoordinates[i];
+                    i++;
+                }
+            }
+        }
+    }
+
+    public void multiplyByScalar(double coefficient) {
+        for (int i = 0; i < vectorCoordinates.length; i++) {
+            vectorCoordinates[i] *= coefficient;
+        }
+    }
+
+    public void expand() {
+        multiplyByScalar(-1);
+    }
+
+    public double getVectorLength() {
+        double maxValues = vectorCoordinates[vectorCoordinates.length - 1];
+        double minValues = vectorCoordinates[0];
+
+        for (double vectorCoordinate : vectorCoordinates) {
+            if (maxValues < vectorCoordinate) {
+                maxValues = vectorCoordinate;
+            }
+
+            if (minValues > vectorCoordinate) {
+                minValues = vectorCoordinate;
+            }
+        }
+
+        return maxValues - minValues;
+    }
+
+    public double getComponent(int index) {
+        if (index < 0 || index >= vectorCoordinates.length) {
+            throw new IllegalArgumentException("You specified index = " + index + ". But index must be >= 0 and < " + vectorCoordinates.length);
+        }
+
+        return vectorCoordinates[index];
+    }
+
+    public void setComponent(int index, double values) {
+        if (index < 0 || index >= vectorCoordinates.length) {
+            throw new IllegalArgumentException("You specified index = " + index + ". But index must be >= 0 and < " + vectorCoordinates.length);
+        }
+
+        for (int i = 0; i < vectorCoordinates.length; i++) {
+            if (i == index) {
+                vectorCoordinates[i] = values;
+                break;
+            }
         }
     }
 
@@ -139,10 +185,7 @@ public class Vector {
         final int prime = 31;
         int hash = 1;
 
-        hash = prime * hash + Arrays.hashCode(array);
-        hash = prime * hash + n;
-        hash = prime * hash + (vector != null ? vector.hashCode() : 0);
-        hash = prime * hash + Arrays.hashCode(values);
+        hash = prime * hash + Arrays.hashCode(vectorCoordinates);
 
         return hash;
     }
@@ -159,74 +202,122 @@ public class Vector {
 
         Vector vector = (Vector) o;
 
-        int maxLength = Math.max(array.length, vector.array.length);
-        boolean areEqual = true;
+        if (vectorCoordinates.length != vector.vectorCoordinates.length) {
+            return false;
+        }
 
-        for (int i = 0; i < maxLength; i++) {
-            try {
-                if (array[i] != vector.array[i]) {
-                    areEqual = false;
-                    break;
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
+        for (int i = 0; i < vectorCoordinates.length; i++) {
+            if (vectorCoordinates[i] != vector.vectorCoordinates[i]) {
                 return false;
             }
-
         }
 
-        return areEqual && n == vector.n;
+        return Arrays.equals(vectorCoordinates, vector.vectorCoordinates);
     }
 
-    public static double[] getVectorAddition(Vector nValues1, Vector nValues2) {
-        int maxLength = Math.max(nValues1.array.length, nValues2.array.length);
-        double[] resultVector = new double[maxLength];
+    public static Vector getAmount(Vector vector1, Vector vector2) {
+        int i = 0;
+        Vector vector;
 
-        for (int i = 0; i < maxLength; i++) {
-            try {
-                resultVector[i] = nValues1.array[i] + nValues2.array[i];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                if (nValues1.array.length < nValues2.array.length) {
-                    resultVector[i] = nValues2.array[i];
-                } else {
-                    resultVector[i] = nValues1.array[i];
-                }
+        if (vector1.vectorCoordinates.length > vector2.vectorCoordinates.length) {
+            vector = new Vector(vector1.vectorCoordinates.length);
+
+            while (i < vector2.vectorCoordinates.length) {
+                vector.vectorCoordinates[i] = vector1.vectorCoordinates[i] + vector2.vectorCoordinates[i];
+                i++;
             }
+
+            while (i < vector1.vectorCoordinates.length) {
+                vector.vectorCoordinates[i] = vector1.vectorCoordinates[i];
+                i++;
+            }
+
+            return vector;
         }
 
-        return resultVector;
+        vector = new Vector(vector2.vectorCoordinates.length);
+
+        while (i < vector1.vectorCoordinates.length) {
+            vector.vectorCoordinates[i] = vector1.vectorCoordinates[i] + vector2.vectorCoordinates[i];
+            i++;
+        }
+
+        while (i < vector2.vectorCoordinates.length) {
+            vector.vectorCoordinates[i] = vector2.vectorCoordinates[i];
+            i++;
+        }
+
+        return vector;
     }
 
-    public static double[] getVectorSubtraction(Vector nValues1, Vector nValues2) {
-        int maxLength = Math.max(nValues1.array.length, nValues2.array.length);
-        double[] resultVector = new double[maxLength];
 
-        for (int i = 0; i < maxLength; i++) {
-            try {
-                resultVector[i] = nValues1.array[i] - nValues2.array[i];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                if (nValues1.array.length < nValues2.array.length) {
-                    resultVector[i] = -nValues2.array[i];
-                } else {
-                    resultVector[i] = -nValues1.array[i];
-                }
+    public static Vector getDifference(Vector vector1, Vector vector2) {
+        int i = 0;
+        Vector vector;
+
+        if (vector1.vectorCoordinates.length > vector2.vectorCoordinates.length) {
+            vector = new Vector(vector1.vectorCoordinates.length);
+
+            while (i < vector2.vectorCoordinates.length) {
+                vector.vectorCoordinates[i] = vector1.vectorCoordinates[i] - vector2.vectorCoordinates[i];
+                i++;
             }
+
+            while (i < vector1.vectorCoordinates.length) {
+                vector.vectorCoordinates[i] = vector1.vectorCoordinates[i];
+                i++;
+            }
+
+            return vector;
         }
 
-        return resultVector;
+        vector = new Vector(vector2.vectorCoordinates.length);
+
+        while (i < vector1.vectorCoordinates.length) {
+            vector.vectorCoordinates[i] = vector1.vectorCoordinates[i] - vector2.vectorCoordinates[i];
+            i++;
+        }
+
+        while (i < vector2.vectorCoordinates.length) {
+            vector.vectorCoordinates[i] = vector2.vectorCoordinates[i];
+            i++;
+        }
+
+        return vector;
     }
 
-    public static double getDotVectorsProduct(Vector nValues1, Vector nValues2) {
-        int maxLength = Math.max(nValues1.array.length, nValues2.array.length);
-        double resultVector = 0;
+    public static Vector getDotProduct(Vector vector1, Vector vector2) {
+        int i = 0;
+        Vector vector;
 
-        for (int i = 0; i < maxLength; i++) {
-            try {
-                resultVector += nValues1.array[i] * nValues2.array[i];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                resultVector += 0;
+        if (vector1.vectorCoordinates.length > vector2.vectorCoordinates.length) {
+            vector = new Vector(vector1.vectorCoordinates.length);
+
+            while (i < vector2.vectorCoordinates.length) {
+                vector.vectorCoordinates[i] = vector1.vectorCoordinates[i] * vector2.vectorCoordinates[i];
+                i++;
             }
+
+            while (i < vector1.vectorCoordinates.length) {
+                vector.vectorCoordinates[i] = vector1.vectorCoordinates[i];
+                i++;
+            }
+
+            return vector;
         }
 
-        return resultVector;
+        vector = new Vector(vector2.vectorCoordinates.length);
+
+        while (i < vector1.vectorCoordinates.length) {
+            vector.vectorCoordinates[i] = vector1.vectorCoordinates[i] * vector2.vectorCoordinates[i];
+            i++;
+        }
+
+        while (i < vector2.vectorCoordinates.length) {
+            vector.vectorCoordinates[i] = vector2.vectorCoordinates[i];
+            i++;
+        }
+
+        return vector;
     }
 }

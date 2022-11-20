@@ -1,33 +1,53 @@
 package ru.academits.kharitonov.vector_main;
 
 import ru.academits.kharitonov.vector.Vector;
-import java.util.Arrays;
 
 public class VectorMain {
     public static void main(String[] args) {
-        double[] array1 = {1.2, 3.2, 1.1, 5.2, 1.7};
-        Vector nValues1 = new Vector(5, array1);
-        System.out.println("Вектор 1: " + nValues1);
+        double[] array1 = new double[]{22, 3, 55, 0, 77, 0};
+        Vector vector1 = new Vector(10, array1);
+        System.out.println("Вектор 1: " + vector1);
 
-        double[] array2 = {1.2, 3.2, 1.1, 10.2, 1.7};
-        Vector nValues2 = new Vector(4, array2);
-        System.out.println("Вектор 2: " + nValues2);
+        double[] array2 = new double[]{25, 3, 4, 0, 7, 9};
+        Vector vector2 = new Vector(array2);
+        System.out.println("Вектор 2: " + vector2);
 
-        System.out.println("-----------------------------------");
+        Vector vector3 = Vector.getAmount(vector1, vector2);
+        Vector vector4 = Vector.getDifference(vector1, vector2);
+        Vector vector5 = Vector.getDotProduct(vector1, vector2);
 
-        System.out.println("Статические:");
-        System.out.println("Сложение векторов: " + Arrays.toString(Vector.getVectorAddition(nValues1, nValues2)));
-        System.out.println("Вычитание векторов: " + Arrays.toString(Vector.getVectorSubtraction(nValues1, nValues2)));
-        System.out.println("Скалярное произведение векторов: " + Vector.getDotVectorsProduct(nValues1, nValues2));
+        System.out.println("------------------------------------------");
+        System.out.println("Статические методы:");
+        System.out.println("Сумма векторов: " + vector3);
+        System.out.println("Разность векторов: " + vector4);
+        System.out.println("Скалярное произведение векторов: " + vector5);
 
-        System.out.println("------------------------------------");
+        System.out.println("------------------------------------------");
+        System.out.println("Нестатические методы:");
 
-        System.out.println("Нестатические:");
-        System.out.println("Сумма векторов: " + Arrays.toString(nValues1.getVectorAddition(nValues2)));
-        System.out.println("Разность векторов: " + Arrays.toString(nValues1.getVectorSubtraction(nValues2)));
-        System.out.println("Умножение векторов: " + Arrays.toString(nValues1.getMultiplicationOfVectorByScalar(3)));
-        System.out.println("Разворот вектора: " + Arrays.toString(nValues1.getVectorReversal()));
-        System.out.println("Длина вектора: " + nValues2.getSize());
-        System.out.println("Компонента вектора по индексу: " + nValues1.getVectorComponent(2));
+        vector2.add(vector1);
+        System.out.println("Вектор после прибавления к нему другого вектора: " + vector2);
+
+        vector2.subtract(vector1);
+        System.out.println("Вектор после вычитания из него другого вектора: " + vector2);
+
+        vector2.multiplyByScalar(5);
+        System.out.println("Вектор после умножения его на скаляр: " + vector2);
+
+        vector2.expand();
+        System.out.println("Вектор после разворота: " + vector2);
+
+        System.out.println("Компонента вектора под индексом: " + vector2.getComponent(2));
+
+        vector2.setComponent(3, -6);
+        System.out.println("Вектор после замены значения под индексом: " + vector2);
+
+        System.out.println("Длина вектора: " + vector2.getVectorLength());
+
+        if (vector1.equals(vector2)) {
+            System.out.println("Векторы равны");
+        } else {
+            System.out.println("Векторы не равны");
+        }
     }
 }
