@@ -2,65 +2,61 @@ package ru.academits.kharitonov.arraylisthome;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ArrayListHome {
-    public static ArrayList<Integer> getFileLinesList(String filePath) throws IOException {
-        ArrayList<Integer> fileLinesList = new ArrayList<>();
+    public static ArrayList<Integer> getFileIntegersList(String filePath) throws IOException {
+        ArrayList<Integer> fileIntegersList = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String currentString;
+            String line;
 
-            while ((currentString = reader.readLine()) != null) {
-                int number = Integer.parseInt(currentString);
-                fileLinesList.add(number);
+            while ((line = reader.readLine()) != null) {
+                int number = Integer.parseInt(line);
+                fileIntegersList.add(number);
             }
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File not found. Check the specified path and the existence of the file.");
-        }
 
-        return fileLinesList;
+            return fileIntegersList;
+        }
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Изначальный список: " + getFileLinesList("arrayListHome.txt"));
+        try {
+            System.out.println("Изначальный список: " + getFileIntegersList("arrayListHome.txt"));
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException(e.getMessage());
+        } finally {
+            System.out.println("----------------------------------------------------------");
 
-        System.out.println("----------------------------------------------------------");
+            ArrayList<Integer> integersList = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 5, 2, 6, 7, 8, 9, 10, 10, 9));
+            System.out.println("Список целых чисел: " + integersList);
 
-        ArrayList<Integer> integersList = new ArrayList<>();
-        int i = 1;
-
-        while (i <= 10) {
-            integersList.add(i);
-            i++;
-        }
-
-        System.out.println("Список целых чисел: " + integersList);
-
-        for (i = 0; i < integersList.size(); i++) {
-            if (integersList.get(i) % 2 == 0) {
-                integersList.remove(i);
+            for (int i = 0; i < integersList.size(); i++) {
+                if (integersList.get(i) % 2 == 0) {
+                    integersList.remove(i);
+                    i--;
+                }
             }
-        }
 
-        System.out.println("Список целых чисел после удаления четных чисел: " + integersList);
-        System.out.println("----------------------------------------------------------");
+            System.out.println("Список целых чисел после удаления четных чисел: " + integersList);
+            System.out.println("----------------------------------------------------------");
 
-        integersList.add(1);
-        integersList.add(3);
-        integersList.add(10);
+            ArrayList<Integer> integersListWithRepetition = new ArrayList<>(Arrays.asList(1, 1, 1, 1, 2, 1, 1, 1, 1, 3, 1));
+            System.out.println("Список целых чисел с повторением: " + integersListWithRepetition);
 
-        System.out.println("Список целых чисел: " + integersList);
+            ArrayList<Integer> integersListWithoutRepetition = new ArrayList<>(5);
 
-        ArrayList<Integer> integersListWithoutRepetition = new ArrayList<>();
+            for (Integer number : integersListWithRepetition) {
+                if (integersListWithoutRepetition.contains(number)) {
+                    continue;
+                }
 
-        for (i = 0; i < integersList.size(); i++) {
-            int elementIndexFirstOccurrence = integersList.indexOf(integersList.get(i));
-
-            if (elementIndexFirstOccurrence == i) {
-                integersListWithoutRepetition.add(integersList.get(elementIndexFirstOccurrence));
+                integersListWithoutRepetition.add(number);
             }
-        }
 
-        System.out.println("Список целых чисел после удаления повторений: " + integersListWithoutRepetition);
+            integersListWithoutRepetition.trimToSize();
+
+            System.out.println("Список целых чисел после удаления повторений: " + integersListWithoutRepetition);
+        }
     }
 }
