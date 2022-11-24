@@ -6,9 +6,8 @@ import java.util.Arrays;
 
 public class ArrayListHome {
     public static ArrayList<Integer> getFileIntegersList(String filePath) throws IOException {
-        ArrayList<Integer> fileIntegersList = new ArrayList<>();
-
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            ArrayList<Integer> fileIntegersList = new ArrayList<>();
             String line;
 
             while ((line = reader.readLine()) != null) {
