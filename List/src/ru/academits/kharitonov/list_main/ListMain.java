@@ -15,23 +15,22 @@ public class ListMain {
         System.out.println("Изначальный список: " + list1);
         System.out.println("1.  Длина списка: " + list1.getLength());
         System.out.println("2.  Значение первого элемента списка: " + list1.getFirst());
-        System.out.println("3а. Значение по указанному индексу: " + list1.getValue(1));
+        System.out.println("3а. Значение по указанному индексу: " + list1.getByIndex(1));
 
         System.out.println("-----------------------------------------------------------------");
-        System.out.println("3б. Значение элемента до изменения: " + list1.setValue(3, 77));
+        System.out.println("3б. Значение элемента до изменения: " + list1.setByIndex(3, 77));
         System.out.println("Список после изменения элемента: " + list1);
         System.out.println("-----------------------------------------------------------------");
 
-        System.out.println("4.  Значение элемента до удаления: " + list1.removeByIndex(4));
+        System.out.println("4.  Значение элемента до удаления: " + list1.removeByIndex(5));
         System.out.println("Список после уделения элемента: " + list1);
         System.out.println("-----------------------------------------------------------------");
 
-
-        list1.insertElementByIndex(3, 222);
+        list1.insertItemByIndex(5, 222);
         System.out.println("Список после вставки элемента по индексу: " + list1);
         System.out.println("-----------------------------------------------------------------");
 
-        if (list1.removeByMatch(30)) {
+        if (list1.removeByData(78)) {
             System.out.println("7.  Элемент удален");
         } else {
             System.out.println("7.  Элемент не был удален");
@@ -44,7 +43,7 @@ public class ListMain {
         System.out.println("Список после удаления первого элемента: " + list1);
         System.out.println("-----------------------------------------------------------------");
 
-        list1.deploy();
+        list1.reverse();
         System.out.println("Список после разворота: " + list1);
         System.out.println("Копия списка: " + list1.copy());
     }
