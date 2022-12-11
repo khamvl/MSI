@@ -26,7 +26,7 @@ public class ListMain {
         System.out.println("Список после уделения элемента: " + list1);
         System.out.println("-----------------------------------------------------------------");
 
-        list1.insertItemByIndex(5, 222);
+        list1.insertByIndex(5, 222);
         System.out.println("Список после вставки элемента по индексу: " + list1);
         System.out.println("-----------------------------------------------------------------");
 
@@ -45,6 +45,8 @@ public class ListMain {
 
         list1.reverse();
         System.out.println("Список после разворота: " + list1);
-        System.out.println("Копия списка: " + list1.copy());
+
+        SinglyLinkedList<Integer> list2 = new SinglyLinkedList<>();
+        System.out.println("Копия списка: " + list2.copy());
     }
 }

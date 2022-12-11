@@ -23,12 +23,12 @@ public class SinglyLinkedList<T> {
         return currentItem;
     }
 
-    // 1. получение размера списка
+    // 1. Получение размера списка
     public int getLength() {
         return length;
     }
 
-    // 2. получение значения первого элемента
+    // 2. Получение значения первого элемента
     public T getFirst() {
         if (head == null) {
             throw new NoSuchElementException("List is empty!");
@@ -37,14 +37,14 @@ public class SinglyLinkedList<T> {
         return head.getData();
     }
 
-    // 3a. получение значения по указанному индексу
+    // 3a. Получение значения по указанному индексу
     public T getByIndex(int index) {
         checkIndex(index);
 
         return getItemByIndex(index).getData();
     }
 
-    // 3б. изменение значения по указанному индексу
+    // 3б. Изменение значения по указанному индексу
     // Изменение значения по индексу пусть выдает старое значение
     public T setByIndex(int index, T data) {
         checkIndex(index);
@@ -56,8 +56,8 @@ public class SinglyLinkedList<T> {
         return oldData;
     }
 
-    // 4. удаление элемента по индексу
-    // пусть выдает значение элемента
+    // 4. Удаление элемента по индексу
+    // Пусть выдает значение элемента
     public T removeByIndex(int index) {
         checkIndex(index);
 
@@ -65,22 +65,22 @@ public class SinglyLinkedList<T> {
             return removeFirst();
         }
 
-        T removedData = getItemByIndex(index).getData();
         ListItem<T> previousItem = getItemByIndex(index - 1);
+        T removedData = previousItem.getNext().getData();
         previousItem.setNext(previousItem.getNext().getNext());
         length--;
 
         return removedData;
     }
 
-    // 5. вставка элемента в начало
+    // 5. Вставка элемента в начало
     public void insertFirst(T data) {
         head = new ListItem<>(data, head);
         length++;
     }
 
-    // 6. вставка элемента по индексу
-    public void insertItemByIndex(int index, T data) {
+    // 6. Вставка элемента по индексу
+    public void insertByIndex(int index, T data) {
         if (index < 0 || index > length) {
             throw new IndexOutOfBoundsException("You specified index = " + index + ". But index must be >= 0 and <= " + length);
         }
@@ -94,11 +94,11 @@ public class SinglyLinkedList<T> {
         previousItem.setNext(new ListItem<>(data, previousItem.getNext()));
     }
 
-    // 7. удаление узла по значению,
-    // пусть выдает true, если элемент был удален
+    // 7. Удаление узла по значению,
+    // Пусть выдает true, если элемент был удален
     public boolean removeByData(T data) {
-        if (length == 0) {
-            throw new NoSuchElementException("List is empty!");
+        if (isEmpty()) {
+            return false;
         }
 
         if (Objects.equals(head.getData(), data)) {
@@ -106,19 +106,24 @@ public class SinglyLinkedList<T> {
             return true;
         }
 
-        for (ListItem<T> currentItem = head.getNext(), previousItem = null; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
-            if (Objects.equals(currentItem.getData(), data)) {
-                previousItem.setNext(currentItem.getNext());
+        ListItem<T> currentItem = head;
+
+        while (currentItem.getNext() != null) {
+            if (Objects.equals(currentItem.getNext().getData(), data)) {
+                currentItem.setNext(currentItem.getNext().getNext());
                 length--;
+
                 return true;
             }
+
+            currentItem = currentItem.getNext();
         }
 
         return false;
     }
 
-    // 8. удаление первого элемента
-    // пусть выдает значение элемента
+    // 8. Удаление первого элемента
+    // Пусть выдает значение элемента
     public T removeFirst() {
         if (head == null) {
             throw new NoSuchElementException("List is empty!");
@@ -131,7 +136,7 @@ public class SinglyLinkedList<T> {
         return removedData;
     }
 
-    // 9. разворот списка за линейное время
+    // 9. Разворот списка за линейное время
     public void reverse() {
         ListItem<T> currentItem = head;
         ListItem<T> previousItem = null;
@@ -147,8 +152,12 @@ public class SinglyLinkedList<T> {
         }
     }
 
-    // 10. копирование списка
+    // 10. Копирование списка
     public SinglyLinkedList<T> copy() {
+        if (isEmpty()) {
+            return new SinglyLinkedList<>();
+        }
+
         SinglyLinkedList<T> listCopy = new SinglyLinkedList<>();
         listCopy.length = length;
 
@@ -161,6 +170,10 @@ public class SinglyLinkedList<T> {
         }
 
         return listCopy;
+    }
+
+    private boolean isEmpty() {
+        return length == 0;
     }
 
     @Override
