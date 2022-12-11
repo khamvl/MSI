@@ -5,9 +5,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ArrayListHome {
-    public static void main(String[] args) {
-        ArrayList<String> fileLinesList = getFileLinesList("arrayListHome.txt");
-        System.out.println("Список строк файла: " + fileLinesList);
+    public static ArrayList<String> getFileLinesList(String filePath) throws Exception {
+        ArrayList<String> fileLinesList = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                fileLinesList.add(line);
+            }
+        }
+
+        return fileLinesList;
+    }
+
+    public static void main(String[] args) throws Exception {
+        try {
+            ArrayList<String> fileLinesList = getFileLinesList("arrayListHome.txt");
+            System.out.println("Список строк файла: " + fileLinesList);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.println("----------------------------------------------------------");
 
@@ -36,21 +54,5 @@ public class ArrayListHome {
         }
 
         System.out.println("Список целых чисел после удаления повторений: " + integersListWithoutRepetition);
-    }
-
-    public static ArrayList<String> getFileLinesList(String filePath) {
-        ArrayList<String> fileLinesList = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                fileLinesList.add(line);
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return fileLinesList;
     }
 }
