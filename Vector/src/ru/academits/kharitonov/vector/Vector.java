@@ -7,7 +7,7 @@ public class Vector {
 
     private void checkSize(int size) {
         if (size <= 0) {
-            throw new NegativeArraySizeException("vectorSize = " + size + ". But must be > 0");
+            throw new IllegalArgumentException("vectorSize = " + size + ". But must be > 0");
         }
     }
 
@@ -28,12 +28,9 @@ public class Vector {
     }
 
     public Vector(double[] values) {
-        if (values.length <= 0) {
-            throw new NegativeArraySizeException("valuesLength = " + values.length + ". But valuesLength must be > 0");
-        }
+        checkSize(values.length);
 
-        coordinates = new double[values.length];
-        System.arraycopy(values, 0, coordinates, 0, coordinates.length);
+        coordinates = Arrays.copyOf(values, values.length);
     }
 
     public Vector(int size, double[] values) {
@@ -91,13 +88,13 @@ public class Vector {
     }
 
     public double getLength() {
-        double length = 0;
+        double sum = 0;
 
         for (double vectorCoordinate : coordinates) {
-            length += vectorCoordinate * vectorCoordinate;
+            sum += vectorCoordinate * vectorCoordinate;
         }
 
-        return Math.sqrt(length);
+        return Math.sqrt(sum);
     }
 
     public double getComponent(int index) {
