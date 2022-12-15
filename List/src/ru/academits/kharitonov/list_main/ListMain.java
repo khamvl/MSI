@@ -30,7 +30,7 @@ public class ListMain {
         System.out.println("Список после вставки элемента по индексу: " + list1);
         System.out.println("-----------------------------------------------------------------");
 
-        if (list1.removeByData(78)) {
+        if (list1.removeByData(100)) {
             System.out.println("7.  Элемент удален");
         } else {
             System.out.println("7.  Элемент не был удален");

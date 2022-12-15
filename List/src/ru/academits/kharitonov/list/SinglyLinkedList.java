@@ -106,17 +106,13 @@ public class SinglyLinkedList<T> {
             return true;
         }
 
-        ListItem<T> currentItem = head;
-
-        while (currentItem.getNext() != null) {
-            if (Objects.equals(currentItem.getNext().getData(), data)) {
-                currentItem.setNext(currentItem.getNext().getNext());
+        for (ListItem<T> currentItem = head.getNext(), previousItem = head; currentItem != null; previousItem = currentItem, currentItem = currentItem.getNext()) {
+            if (Objects.equals(currentItem.getData(), data)) {
+                previousItem.setNext(currentItem.getNext());
                 length--;
 
                 return true;
             }
-
-            currentItem = currentItem.getNext();
         }
 
         return false;
