@@ -19,11 +19,11 @@ public class ArrayListHome {
         return fileLinesList;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         try {
             ArrayList<String> fileLinesList = getFileLinesList("arrayListHome.txt");
             System.out.println("Список строк файла: " + fileLinesList);
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
