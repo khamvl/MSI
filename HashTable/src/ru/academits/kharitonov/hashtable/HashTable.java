@@ -6,6 +6,7 @@ public class HashTable<E> implements Collection<E> {
     private final ArrayList<E>[] lists;
     private int size;
     private int modCount;
+
     @SuppressWarnings("unchecked")
     public HashTable() {
         lists = new ArrayList[10];
