@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ArrayListHome {
-    public static ArrayList<String> getFileLinesList(String filePath) throws Exception {
+    public static ArrayList<String> getFileLinesList(String filePath) throws IOException {
         ArrayList<String> fileLinesList = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -23,7 +23,7 @@ public class ArrayListHome {
         try {
             ArrayList<String> fileLinesList = getFileLinesList("arrayListHome.txt");
             System.out.println("Список строк файла: " + fileLinesList);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
 
