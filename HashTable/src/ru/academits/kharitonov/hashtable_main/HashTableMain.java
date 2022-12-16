@@ -50,7 +50,7 @@ public class HashTableMain {
         System.out.println(myHashTable);
         System.out.println("---------------------------------");
 
-        myHashTable.removeAll(Arrays.asList(null, "2", "56", "55" ));
+        myHashTable.removeAll(Arrays.asList(null, "2", "56", "55"));
         System.out.println(myHashTable);
         System.out.println("---------------------------------");
 
