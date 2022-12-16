@@ -2,7 +2,6 @@ package ru.academits.kharitonov.hashtable_main;
 
 import ru.academits.kharitonov.hashtable.HashTable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class HashTableMain {
@@ -38,7 +37,7 @@ public class HashTableMain {
         System.out.println(Arrays.toString(myHashTable.toArray()));
         System.out.println("---------------------------------");
 
-        if (myHashTable.remove("2")) {
+        if (myHashTable.remove("99")) {
             System.out.println("Элемент удален");
         } else {
             System.out.println("Элемент не удален");
@@ -47,18 +46,18 @@ public class HashTableMain {
         System.out.println(myHashTable);
         System.out.println("---------------------------------");
 
-        myHashTable.addAll(new ArrayList<>(Arrays.asList("22", "33", "44")));
+        myHashTable.addAll(Arrays.asList("55", "21"));
         System.out.println(myHashTable);
         System.out.println("---------------------------------");
 
-        myHashTable.removeAll(new ArrayList<>(Arrays.asList("4", "1")));
+        myHashTable.removeAll(Arrays.asList(null, "2", "56", "55" ));
         System.out.println(myHashTable);
         System.out.println("---------------------------------");
 
         System.out.println(Arrays.toString(myHashTable.toArray(new String[8])));
         System.out.println("---------------------------------");
 
-        myHashTable.retainAll(new ArrayList<>((Arrays.asList("22", "5", "44"))));
+        myHashTable.retainAll((Arrays.asList("2", "3")));
         System.out.println(myHashTable);
         System.out.println("---------------------------------");
 
