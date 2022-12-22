@@ -26,7 +26,7 @@ public class ArrayListMain {
         System.out.println("Список как массив: " + Arrays.toString(arrayList1.toArray()));
         System.out.println("--------------------------------------------");
 
-        System.out.println("Список как массив: " + Arrays.toString(arrayList1.toArray(new Integer[4])));
+        System.out.println("Список как массив: " + Arrays.toString(arrayList1.toArray(new Integer[1])));
         System.out.println("--------------------------------------------");
 
         int firstOccurrenceIndex = arrayList1.indexOf(4);
@@ -126,11 +126,11 @@ public class ArrayListMain {
         System.out.println("Список4: " + arrayList4);
 
         arrayList1.addAll(1, arrayList4);
-        System.out.println("Список1 после добавления в него списка3: " + arrayList1);
+        System.out.println("Список1 после добавления в него списка4: " + arrayList1);
         System.out.println("--------------------------------------------");
 
         arrayList1.addAll(arrayList4);
-        System.out.println("Список1 после добавления в него списка3: " + arrayList1);
+        System.out.println("Список1 после добавления в него списка4: " + arrayList1);
         System.out.println("--------------------------------------------");
 
         arrayList1.clear();
