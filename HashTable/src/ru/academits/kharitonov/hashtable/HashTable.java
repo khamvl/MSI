@@ -205,6 +205,10 @@ public class HashTable<E> implements Collection<E> {
             }
         }
 
+        if (hasChange) {
+            modCount++;
+        }
+
         return hasChange;
     }
 
@@ -231,6 +235,10 @@ public class HashTable<E> implements Collection<E> {
                     size -= startCurrentListSize - currentList.size();
                 }
             }
+        }
+
+        if (hasChange) {
+            modCount++;
         }
 
         return hasChange;
