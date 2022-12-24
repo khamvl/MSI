@@ -12,12 +12,12 @@ public class HashTable<E> implements Collection<E> {
         lists = new ArrayList[10];
     }
 
-    @SuppressWarnings("unchecked")
     public HashTable(int capacity) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("Capacity = " + capacity + ". But size must be > 0");
         }
 
+        //noinspection unchecked
         lists = new ArrayList[capacity];
     }
 
@@ -91,7 +91,7 @@ public class HashTable<E> implements Collection<E> {
             }
 
             if (startModCount != modCount) {
-                throw new ConcurrentModificationException("The number of items in the collection has changed during the crawl");
+                throw new ConcurrentModificationException("The collection has changed");
             }
 
             while (true) {
@@ -128,12 +128,13 @@ public class HashTable<E> implements Collection<E> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] a) {
         if (a.length < size) {
+            //noinspection unchecked
             return (T[]) Arrays.copyOf(toArray(), size, a.getClass());
         }
 
+        //noinspection SuspiciousSystemArraycopy
         System.arraycopy(toArray(), 0, a, 0, size);
 
         if (size < a.length) {
@@ -187,19 +188,20 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean removeAll(Collection<?> c) {
-        if (c == null) {
-            throw new NullPointerException("Collection must not be null");
-        }
-
-        if (c.isEmpty()) {
+        if (c.isEmpty() || isEmpty()) {
             return false;
         }
 
-        boolean hasChange = true;
+        boolean hasChange = false;
 
-        for (Object value : c) {
-            if (!remove(value)) {
-                hasChange = false;
+        for (ArrayList<E> list : lists) {
+            if (list != null) {
+                int startListSize = list.size();
+
+                if (list.removeAll(c)) {
+                    hasChange = true;
+                    size -= startListSize - list.size();
+                }
             }
         }
 
@@ -209,6 +211,10 @@ public class HashTable<E> implements Collection<E> {
     @Override
     public boolean retainAll(Collection<?> c) {
         if (c.isEmpty()) {
+            if (isEmpty()) {
+                return false;
+            }
+
             clear();
 
             return false;
