@@ -17,52 +17,55 @@ public class Lambda {
         );
 
         List<String> uniqueNames = persons.stream()
-                .map(Person::getName)
+                .map(Person::name)
                 .distinct()
                 .toList();
 
         System.out.println("A) " + uniqueNames);
         System.out.println("-------------------------------------------------");
 
-        String uniqueNamesInFormat = persons.stream()
-                .map(Person::getName)
-                .distinct()
+        String uniqueNamesString = uniqueNames.stream()
                 .collect(Collectors.joining(", ", "Имена: ", "."));
 
-        System.out.println("Б) " + uniqueNamesInFormat);
+        System.out.println("Б) " + uniqueNamesString);
         System.out.println("-------------------------------------------------");
 
         List<String> peopleNamesUnder18 = persons.stream()
-                .filter(x -> x.getAge() < 18)
-                .map(Person::getName)
+                .filter(x -> x.age() < 18)
+                .map(Person::name)
                 .toList();
 
         OptionalDouble peopleAverageAgeUnder18 = persons.stream()
-                .filter(x -> x.getAge() < 18)
-                .mapToInt(Person::getAge)
+                .filter(x -> x.age() < 18)
+                .mapToInt(Person::age)
                 .average();
 
         System.out.println("В) " + peopleNamesUnder18);
-        System.out.println("Средний возраст: " + peopleAverageAgeUnder18.getAsDouble());
+
+        if (peopleAverageAgeUnder18.isPresent()) {
+            System.out.println("Средний возраст: " + peopleAverageAgeUnder18.getAsDouble());
+        }
+
         System.out.println("-------------------------------------------------");
 
         Map<String, Double> averageAgesByName = persons.stream()
-                .collect(Collectors.groupingBy(Person::getName, Collectors.averagingInt(Person::getAge)));
+                .collect(Collectors.groupingBy(Person::name, Collectors.averagingInt(Person::age)));
 
         System.out.println("Г) " + averageAgesByName);
         System.out.println("-------------------------------------------------");
 
         List<String> from20To45YearsOldPeopleList = persons.stream()
-                .filter(p -> p.getAge() >= 20 && p.getAge() <= 45)
-                .sorted(Comparator.comparingInt(Person::getAge).reversed())
-                .map(Person::getName)
+                .filter(p -> p.age() >= 20 && p.age() <= 45)
+                .sorted(Comparator.comparingInt(Person::age).reversed())
+                .map(Person::name)
                 .toList();
 
         System.out.println("Д) " + from20To45YearsOldPeopleList);
         System.out.println("-------------------------------------------------");
 
-        System.out.print("Введите сколько элементов необходимо вычислить: ");
         Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите сколько элементов необходимо вычислить: ");
         int elementsCount = scanner.nextInt();
 
         DoubleStream squareRoots = DoubleStream.iterate(0, x -> x + 1)
