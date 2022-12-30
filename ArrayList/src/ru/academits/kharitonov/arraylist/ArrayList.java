@@ -5,20 +5,21 @@ import java.util.*;
 public class ArrayList<E> implements List<E> {
     private E[] values;
     private int size;
+    private static final int DEFAULT_CAPACITY = 10;
     private int modCount;
 
-    @SuppressWarnings("unchecked")
     public ArrayList(int size) {
         if (size < 0) {
-            throw new NegativeArraySizeException("Size = " + size + ". But size must be >= 0");
+            throw new IllegalArgumentException("Size = " + size + ". But size must be >= 0");
         }
 
+        //noinspection unchecked
         values = (E[]) new Object[size];
     }
 
     @SuppressWarnings("unchecked")
     public ArrayList() {
-        values = (E[]) new Object[10];
+        values = (E[]) new Object[DEFAULT_CAPACITY];
     }
 
     @Override
@@ -57,10 +58,10 @@ public class ArrayList<E> implements List<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new myListIterator();
+        return new ListsIterator();
     }
 
-    private class myListIterator implements Iterator<E> {
+    private class ListsIterator implements Iterator<E> {
         private int currentIndex = -1;
         private final int startModCount = modCount;
 
@@ -76,7 +77,7 @@ public class ArrayList<E> implements List<E> {
             }
 
             if (startModCount != modCount) {
-                throw new ConcurrentModificationException("The number of items in the collection has changed during the crawl");
+                throw new ConcurrentModificationException("The collection has changed");
             }
 
             currentIndex++;
@@ -108,10 +109,10 @@ public class ArrayList<E> implements List<E> {
         modCount++;
     }
 
-    @SuppressWarnings("unchecked")
     private void increaseCapacity() {
         if (values.length == 0) {
-            values = (E[]) new Object[10];
+            //noinspection unchecked
+            values = (E[]) new Object[DEFAULT_CAPACITY];
 
             return;
         }
@@ -125,12 +126,13 @@ public class ArrayList<E> implements List<E> {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] array) {
         if (array.length < size) {
+            //noinspection unchecked
             return (T[]) Arrays.copyOf(values, size, array.getClass());
         }
 
+        //noinspection SuspiciousSystemArraycopy
         System.arraycopy(values, 0, array, 0, size);
 
         if (array.length > size) {
@@ -177,6 +179,7 @@ public class ArrayList<E> implements List<E> {
             return false;
         }
 
+        //noinspection unchecked
         ArrayList<E> arrayList = (ArrayList<E>) object;
 
         if (size != arrayList.size) {
@@ -338,27 +341,27 @@ public class ArrayList<E> implements List<E> {
             throw new IndexOutOfBoundsException("Index = " + index + ". But index must be >= 0 and <= " + size);
         }
 
+        if (collection.isEmpty()) {
+            return false;
+        }
+
         int finalSize = collection.size() + size;
         ensureCapacity(finalSize);
 
         System.arraycopy(values, index, values, index + collection.size(), size - index);
 
         int i = index;
-        boolean hasChange = false;
 
         for (E currentValue : collection) {
             values[i] = currentValue;
-            hasChange = true;
             i++;
         }
 
         size = finalSize;
 
-        if (hasChange) {
-            modCount++;
-        }
+        modCount++;
 
-        return hasChange;
+        return true;
     }
 
     @Override
