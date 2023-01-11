@@ -3,9 +3,10 @@ package ru.academits.kharitonov.arraylist;
 import java.util.*;
 
 public class ArrayList<E> implements List<E> {
+    private static final int DEFAULT_CAPACITY = 10;
+
     private E[] values;
     private int size;
-    private static final int DEFAULT_CAPACITY = 10;
     private int modCount;
 
     public ArrayList(int size) {
