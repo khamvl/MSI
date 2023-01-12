@@ -221,7 +221,7 @@ public class HashTable<E> implements Collection<E> {
 
             clear();
 
-            return false;
+            return true;
         }
 
         boolean hasChange = false;
