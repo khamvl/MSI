@@ -57,7 +57,7 @@ public class HashTableMain {
         System.out.println(Arrays.toString(myHashTable.toArray(new String[8])));
         System.out.println("---------------------------------");
 
-        myHashTable.retainAll((Arrays.asList("2", "3")));
+        myHashTable.retainAll(Arrays.asList("2", "3"));
         System.out.println(myHashTable);
         System.out.println("---------------------------------");
 
