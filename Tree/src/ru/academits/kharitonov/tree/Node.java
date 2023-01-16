@@ -1,6 +1,6 @@
 package ru.academits.kharitonov.tree;
 
-public class Node<T> {
+class Node<T> {
     private Node<T> left;
     private Node<T> right;
     private final T data;

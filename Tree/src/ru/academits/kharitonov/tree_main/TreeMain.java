@@ -4,7 +4,7 @@ import ru.academits.kharitonov.tree.Tree;
 
 import java.util.function.Consumer;
 
-public class Tree_Main {
+public class TreeMain {
     public static void main(String[] args) {
         Tree<Integer> tree = new Tree<>();
         Consumer<Integer> consumer = x -> System.out.print(x + " ");
@@ -30,17 +30,17 @@ public class Tree_Main {
 
         System.out.println("------------------------------------");
         System.out.print("Обход в ширину: ");
-        tree.breadthTraversal(consumer);
+        tree.traverseInWidth(consumer);
         System.out.println();
 
         System.out.println("------------------------------------");
         System.out.print("Обход в глубину: ");
-        tree.deepTraversal(consumer);
+        tree.traverseInDepth(consumer);
         System.out.println();
 
         System.out.println("------------------------------------");
         System.out.print("Обход в глубину рекурсия: ");
-        tree.deepTraversalRecursion(consumer);
+        tree.traverseInDepthRecursively(consumer);
         System.out.println();
 
         System.out.println("------------------------------------");
@@ -52,6 +52,6 @@ public class Tree_Main {
         }
 
         System.out.print("Обход в глубину: ");
-        tree.deepTraversal(consumer);
+        tree.traverseInDepth(consumer);
     }
 }

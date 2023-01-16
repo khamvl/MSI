@@ -6,6 +6,15 @@ import java.util.function.Consumer;
 public class Tree<T> {
     private Node<T> root;
     private int size;
+    private final Comparator<? super T> comparator;
+
+    public Tree(Comparator<T> comparator) {
+        this.comparator = Objects.requireNonNullElseGet(comparator, () -> this::compare);
+    }
+
+    public Tree() {
+        comparator = this::compare;
+    }
 
     private int compare(T o1, T o2) {
         if (o1 == null && o2 == null) {
@@ -76,11 +85,13 @@ public class Tree<T> {
         Node<T> currentNode = root;
 
         while (true) {
-            if (compare(data, currentNode.getData()) == 0) {
+            int comparatorResult = compare(data,currentNode.getData());
+
+            if (comparatorResult == 0) {
                 return true;
             }
 
-            if (compare(data, currentNode.getData()) == -1) {
+            if (comparatorResult < 0) {
                 if (currentNode.getLeft() != null) {
                     currentNode = currentNode.getLeft();
 
@@ -98,7 +109,7 @@ public class Tree<T> {
         }
     }
 
-    public void breadthTraversal(Consumer<T> consumer) {
+    public void traverseInWidth(Consumer<T> consumer) {
         if (isEmpty()) {
             return;
         }
@@ -120,13 +131,13 @@ public class Tree<T> {
         }
     }
 
-    public void deepTraversal(Consumer<T> consumer) {
+    public void traverseInDepth(Consumer<T> consumer) {
         if (isEmpty()) {
             return;
         }
 
         Deque<Node<T>> deque = new LinkedList<>();
-        deque.add(root);
+        deque.push(root);
 
         while (!deque.isEmpty()) {
             Node<T> currentNode = deque.remove();
@@ -142,11 +153,11 @@ public class Tree<T> {
         }
     }
 
-    public void deepTraversalRecursion(Consumer<T> consumer) {
-        deepTraversalRecursion(root, consumer);
+    public void traverseInDepthRecursively(Consumer<T> consumer) {
+        traverseInDepthRecursively(root, consumer);
     }
 
-    public void deepTraversalRecursion(Node<T> currentNode, Consumer<T> consumer) {
+    public void traverseInDepthRecursively(Node<T> currentNode, Consumer<T> consumer) {
         if (currentNode == null) {
             return;
         }
@@ -154,11 +165,11 @@ public class Tree<T> {
         consumer.accept(currentNode.getData());
 
         if (currentNode.getLeft() != null) {
-            deepTraversalRecursion(currentNode.getLeft(), consumer);
+            traverseInDepthRecursively(currentNode.getLeft(), consumer);
         }
 
         if (currentNode.getRight() != null) {
-            deepTraversalRecursion(currentNode.getRight(), consumer);
+            traverseInDepthRecursively(currentNode.getRight(), consumer);
         }
     }
 
@@ -170,13 +181,13 @@ public class Tree<T> {
         Node<T> removedNode = root;
         Node<T> removedNodeParent = null;
 
-        int result = compare(data, removedNode.getData());
+        int comparatorResult = compare(data, removedNode.getData());
         boolean isLeftChild = false;
 
-        while (result != 0) {
+        while (comparatorResult != 0) {
             removedNodeParent = removedNode;
 
-            if (result < 0) {
+            if (comparatorResult < 0) {
                 removedNode = removedNode.getLeft();
                 isLeftChild = true;
             } else {
@@ -188,7 +199,7 @@ public class Tree<T> {
                 return false;
             }
 
-            result = compare(data, removedNode.getData());
+            comparatorResult = compare(data, removedNode.getData());
         }
 
         if (removedNode.getLeft() == null && removedNode.getRight() == null) {
@@ -251,15 +262,12 @@ public class Tree<T> {
             return true;
         }
 
-        Node<T> smallestLeftNodeParent = null;
-        Node<T> smallestLeftNode = removedNode.getRight();
-
         Node<T> removedNodeLeftChild = removedNode.getLeft();
-        Node<T> removedNodeRightChild = smallestLeftNode;
+        Node<T> removedNodeRightChild = removedNode.getRight();
 
-        if (smallestLeftNode.getLeft() == null) {
+        if (removedNodeRightChild.getLeft() == null) {
             if (removedNodeParent == null) {
-                root = smallestLeftNode;
+                root = removedNodeRightChild;
                 root.setLeft(removedNodeLeftChild);
                 size--;
 
@@ -277,6 +285,9 @@ public class Tree<T> {
 
             return true;
         }
+
+        Node<T> smallestLeftNodeParent = null;
+        Node<T> smallestLeftNode = removedNodeRightChild;
 
         while (smallestLeftNode.getLeft() != null) {
             smallestLeftNodeParent = smallestLeftNode;
