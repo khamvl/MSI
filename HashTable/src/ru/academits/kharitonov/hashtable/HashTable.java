@@ -214,11 +214,11 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean retainAll(Collection<?> c) {
-        if (c.isEmpty()) {
-            if (isEmpty()) {
-                return false;
-            }
+        if (isEmpty()) {
+            return false;
+        }
 
+        if (c.isEmpty()) {
             clear();
 
             return true;
