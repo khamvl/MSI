@@ -54,7 +54,7 @@ public class Tree<T> {
         Node<T> currentNode = root;
 
         while (true) {
-            if (compare(data, currentNode.getData()) == -1) {
+            if (comparator.compare(data, currentNode.getData()) < 0) {
                 if (currentNode.getLeft() != null) {
                     currentNode = currentNode.getLeft();
 
@@ -85,7 +85,7 @@ public class Tree<T> {
         Node<T> currentNode = root;
 
         while (true) {
-            int comparatorResult = compare(data,currentNode.getData());
+            int comparatorResult = comparator.compare(data, currentNode.getData());
 
             if (comparatorResult == 0) {
                 return true;
@@ -144,24 +144,24 @@ public class Tree<T> {
             consumer.accept(currentNode.getData());
 
             if (currentNode.getRight() != null) {
-                deque.addFirst(currentNode.getRight());
+                deque.push(currentNode.getRight());
             }
 
             if (currentNode.getLeft() != null) {
-                deque.addFirst(currentNode.getLeft());
+                deque.push(currentNode.getLeft());
             }
         }
     }
 
     public void traverseInDepthRecursively(Consumer<T> consumer) {
+        if (isEmpty()) {
+            return;
+        }
+
         traverseInDepthRecursively(root, consumer);
     }
 
     public void traverseInDepthRecursively(Node<T> currentNode, Consumer<T> consumer) {
-        if (currentNode == null) {
-            return;
-        }
-
         consumer.accept(currentNode.getData());
 
         if (currentNode.getLeft() != null) {
@@ -181,7 +181,7 @@ public class Tree<T> {
         Node<T> removedNode = root;
         Node<T> removedNodeParent = null;
 
-        int comparatorResult = compare(data, removedNode.getData());
+        int comparatorResult = comparator.compare(data, removedNode.getData());
         boolean isLeftChild = false;
 
         while (comparatorResult != 0) {
@@ -199,7 +199,7 @@ public class Tree<T> {
                 return false;
             }
 
-            comparatorResult = compare(data, removedNode.getData());
+            comparatorResult = comparator.compare(data, removedNode.getData());
         }
 
         if (removedNode.getLeft() == null && removedNode.getRight() == null) {
