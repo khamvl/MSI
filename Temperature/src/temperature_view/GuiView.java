@@ -23,18 +23,10 @@ public class GuiView implements View {
             inputScaleComboBox = new JComboBox<>(converter.scales());
             outputScaleComboBox = new JComboBox<>(converter.scales());
 
-            Font font = new Font("Arial", Font.BOLD, 13);
-            Color color = new Color(0x002AFF);
-
-            inputTextField.setFont(font);
-            inputTextField.setForeground(color);
             inputTextField.setHorizontalAlignment(JTextField.CENTER);
 
             outputTextField.setHorizontalAlignment(JTextField.CENTER);
-            outputTextField.setEnabled(false);
-
-            inputScaleComboBox.setFont(font);
-            inputScaleComboBox.setForeground(Color.BLUE);
+            outputTextField.setEditable(false);
 
             JFrame window = new JFrame("Temperature converter");
             window.setSize(450, 200);
@@ -51,11 +43,7 @@ public class GuiView implements View {
 
             constraints.gridx = 0;
             constraints.gridy = 0;
-            JLabel inputTemperatureLabel = new JLabel();
-            inputTemperatureLabel.setFont(font);
-            inputTemperatureLabel.setForeground(color);
-            inputTemperatureLabel.setText("Input temperature");
-            window.add(inputTemperatureLabel, constraints);
+            window.add(new JLabel("Input temperature"), constraints);
 
             constraints.gridx = 0;
             constraints.gridy = 1;
@@ -66,7 +54,6 @@ public class GuiView implements View {
             window.add(inputScaleComboBox, constraints);
 
             converterButton = new JButton("convert");
-            converterButton.setForeground(Color.RED);
             converterButton.addActionListener(actionListener);
             constraints.gridx = 2;
             constraints.gridy = 1;

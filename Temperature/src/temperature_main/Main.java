@@ -6,10 +6,10 @@ import temperature_view.View;
 
 public class Main {
     public static void main(String[] args) {
-        Scale[] scales = new Scale[]{
-                new Celsius(),
-                new Fahrenheit(),
-                new Kelvin()
+        Scale[] scales = {
+                new CelsiusScale(),
+                new FahrenheitScale(),
+                new KelvinScale()
         };
 
         Model converter = new Converter(scales);
@@ -17,7 +17,7 @@ public class Main {
 
         guiView.start(converter, e -> {
             try {
-                guiView.setOutputTemperature(converter.getConvertedTemperature(
+                guiView.setOutputTemperature(converter.convertTemperature(
                         guiView.getInputScale(),
                         guiView.getOutputScale(),
                         guiView.getInputTemperature()

@@ -1,18 +1,18 @@
 package temperature_model;
 
-public class Celsius implements Scale {
+public class FahrenheitScale implements Scale {
     @Override
     public double convertFromCelsius(double temperature) {
-        return temperature;
+        return (9.0 / 5) * temperature + 32;
     }
 
     @Override
     public double convertInCelsius(double temperature) {
-        return temperature;
+        return (5.0 / 9) * (temperature - 32);
     }
 
     @Override
     public String toString() {
-        return "Celsius scale";
+        return "Fahrenheit scale";
     }
 }
